@@ -1,0 +1,20 @@
+
+<% the_id = params["id"] %>
+<% the_book = Book.read(the_id) %>
+<% the_reviews = Review.where("title_id" => the_book["id"]) %>
+
+<h3>Book Title</h3>
+<h2><%= the_book["title"] %></h2>
+
+<hr>
+
+<h4> Customer Reviews (rating) </h4>
+<ul>
+
+  <% the_reviews.each do |the_reviews| %>
+
+    <li>
+     <%= the_reviews["comment"] %> (<%= the_reviews["rating"] %>)
+    </li>
+
+  <% end %>

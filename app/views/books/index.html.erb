@@ -1,0 +1,38 @@
+<h2> Books </h2>
+
+<% all_books = Book.read %>
+
+<hr>
+
+<h4> Editors pick: </h4>
+
+<ul>
+<% editorspick = Review.order("rating desc").limit(2) %>
+	
+	<% editorspick.each do |pick| %>
+	<% the_pick = Book.find_by("id" => pick["title_id"]) %>
+
+		<li> 
+			<%= link_to the_pick["title"], "/books/#{the_pick["id"]}" %>
+
+		</li>
+
+	<% end %>
+</ul>
+
+<hr>
+
+<ul>		
+
+		<% all_books.each do |book| %>
+		<% the_ratings = Review.where("title_id" => book["id"]) %>
+		
+				<li> 
+						<%= link_to book["title"], "/books/#{book["id"]}" %>, average rating  <%= the_ratings.average(:rating) %>
+
+				</li>
+
+		<% end %>
+
+</ul>
+
